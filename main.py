@@ -49,8 +49,7 @@ class MainUi(QtGui.QMainWindow, Ui_MainWindow, QtToPython):
         self.run_button.clicked.connect(self.run_button_clicked)
 
     def run_button_clicked(self):
-        # self.result_text_edit.clear()
-        result = self.get_re_result()
+        result = self.get_re_result(re.S)
         self.result_text_edit.setPlainText(u"结果数量： %s" % str(len(result)) + '\n')
         for r in result:
             self.set_re_result(self.list_to_str(r))
@@ -70,8 +69,8 @@ class MainUi(QtGui.QMainWindow, Ui_MainWindow, QtToPython):
     def set_result_text(self, text):
         return self.result_text_edit.appendPlainText(text+'\n')
 
-    def get_re_result(self):
-        return re.findall(r'%s' % self.re_text, self.content_text)
+    def get_re_result(self, mode):
+        return re.findall(r'%s' % self.re_text, self.content_text, mode)
 
     def set_re_result(self, text):
         return self.set_result_text(text)
