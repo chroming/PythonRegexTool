@@ -49,9 +49,11 @@ class MainUi(QtGui.QMainWindow, Ui_MainWindow, QtToPython):
         self.run_button.clicked.connect(self.run_button_clicked)
 
     def run_button_clicked(self):
+        # self.result_text_edit.clear()
         result = self.get_re_result()
-        result = self.list_to_str(result)
-        self.set_re_result(result)
+        self.result_text_edit.setPlainText(u"结果数量： %s" % str(len(result)) + '\n')
+        for r in result:
+            self.set_re_result(self.list_to_str(r))
 
     @property
     def re_text(self):
@@ -66,7 +68,7 @@ class MainUi(QtGui.QMainWindow, Ui_MainWindow, QtToPython):
         return self.get_text_edit_unicode(self.result_text_edit)
 
     def set_result_text(self, text):
-        return self.result_text_edit.setPlainText(text)
+        return self.result_text_edit.appendPlainText(text+'\n')
 
     def get_re_result(self):
         return re.findall(r'%s' % self.re_text, self.content_text)
@@ -74,9 +76,23 @@ class MainUi(QtGui.QMainWindow, Ui_MainWindow, QtToPython):
     def set_re_result(self, text):
         return self.set_result_text(text)
 
-    @staticmethod
-    def list_to_str(result_list):
-        return '[' + ','.join(result_list) + ']'
+    def list_to_str(self, lists):
+        result_list = []
+        for item in lists:
+            if isinstance(item, (list, tuple)):
+                list_str = self.list_to_str(item)
+                result_list.append(list_str)
+            elif isinstance(item, int):
+                result_list.append(str(item))
+            elif isinstance(item, unicode):
+                result_list.append(item.decode('utf-8'))
+            elif isinstance(item, str):
+                result_list.append(item)
+            else:
+                print u"未知类型转换错误！"
+                raise TypeError
+        result_str = '[' + ','.join(result_list) + ']'
+        return result_str
 
 
 if __name__ == '__main__':
