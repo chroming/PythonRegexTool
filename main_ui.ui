@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>637</height>
+    <width>797</width>
+    <height>738</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -24,9 +24,9 @@
     <property name="geometry">
      <rect>
       <x>15</x>
-      <y>24</y>
+      <y>36</y>
       <width>766</width>
-      <height>71</height>
+      <height>59</height>
      </rect>
     </property>
     <property name="plainText">
@@ -36,20 +36,20 @@
    <widget class="QPlainTextEdit" name="content_text_edit">
     <property name="geometry">
      <rect>
-      <x>15</x>
-      <y>117</y>
-      <width>766</width>
-      <height>271</height>
+      <x>16</x>
+      <y>118</y>
+      <width>765</width>
+      <height>211</height>
      </rect>
     </property>
    </widget>
    <widget class="QPlainTextEdit" name="result_text_edit">
     <property name="geometry">
      <rect>
-      <x>15</x>
-      <y>447</y>
-      <width>766</width>
-      <height>139</height>
+      <x>16</x>
+      <y>390</y>
+      <width>765</width>
+      <height>291</height>
      </rect>
     </property>
     <property name="sizePolicy">
@@ -63,21 +63,21 @@
     <property name="geometry">
      <rect>
       <x>15</x>
-      <y>6</y>
-      <width>64</width>
+      <y>10</y>
+      <width>45</width>
       <height>16</height>
      </rect>
     </property>
     <property name="text">
-     <string>正则表达式</string>
+     <string>表达式</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>15</x>
-      <y>99</y>
-      <width>34</width>
+      <x>16</x>
+      <y>100</y>
+      <width>24</width>
       <height>16</height>
      </rect>
     </property>
@@ -88,10 +88,10 @@
    <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
-      <x>15</x>
-      <y>429</y>
-      <width>54</width>
-      <height>12</height>
+      <x>16</x>
+      <y>368</y>
+      <width>48</width>
+      <height>16</height>
      </rect>
     </property>
     <property name="text">
@@ -101,8 +101,8 @@
    <widget class="QPushButton" name="run_button">
     <property name="geometry">
      <rect>
-      <x>15</x>
-      <y>396</y>
+      <x>16</x>
+      <y>340</y>
       <width>75</width>
       <height>23</height>
      </rect>
@@ -111,13 +111,87 @@
      <string>开始匹配</string>
     </property>
    </widget>
+   <widget class="QRadioButton" name="re_button">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>10</y>
+      <width>55</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>正则</string>
+    </property>
+    <property name="checked">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="xpath_button">
+    <property name="geometry">
+     <rect>
+      <x>252</x>
+      <y>10</y>
+      <width>53</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>xpath</string>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="re_mode_box">
+    <property name="geometry">
+     <rect>
+      <x>128</x>
+      <y>8</y>
+      <width>87</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <item>
+     <property name="text">
+      <string>.包括换行</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>.不包括换行</string>
+     </property>
+    </item>
+   </widget>
+   <widget class="QComboBox" name="xpath_mode_box">
+    <property name="geometry">
+     <rect>
+      <x>312</x>
+      <y>8</y>
+      <width>85</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <item>
+     <property name="text">
+      <string>soupparser</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>lxml.html</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>html5lib</string>
+     </property>
+    </item>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>797</width>
      <height>23</height>
     </rect>
    </property>

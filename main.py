@@ -3,6 +3,7 @@
 import sys
 from PyQt4 import QtGui, uic
 import re
+from lxml.html import fromstring, soupparser, html5parser, tostring, HtmlElement
 
 
 Ui_MainWindow, QtBaseClass = uic.loadUiType('main_ui.ui')
@@ -47,12 +48,17 @@ class MainUi(QtGui.QMainWindow, Ui_MainWindow, QtToPython):
         self.setupUi(self)
         self.setWindowTitle(u'Python正则测试器 V0.1')
         self.run_button.clicked.connect(self.run_button_clicked)
+        self.RE_XPATH = [self.get_re_result, self.get_xpath_result]
+        self.RE_MODE = [re.S, 0]
+        self.XPATH_MODE = [soupparser.fromstring, fromstring, html5parser.fromstring]
 
-    def run_button_clicked(self):
-        result = self.get_re_result(re.S)
-        self.result_text_edit.setPlainText(u"结果数量： %s" % str(len(result)) + '\n')
-        for r in result:
-            self.set_re_result(self.list_to_str(r))
+    @property
+    def re_xpath(self):
+        return 0 if self.re_button.isChecked() else 1
+
+
+    def choice_mode(self):
+        return self.re_mode_box.currentIndex() if self.re_button.isChecked() else self.xpath_mode_box.currentIndex()
 
     @property
     def re_text(self):
@@ -66,11 +72,23 @@ class MainUi(QtGui.QMainWindow, Ui_MainWindow, QtToPython):
     def result_text(self):
         return self.get_text_edit_unicode(self.result_text_edit)
 
+    def run_button_clicked(self):
+        result = self.RE_XPATH[self.re_xpath](self.RE_MODE[self.choice_mode()] if self.re_xpath == 0 else self.XPATH_MODE[self.choice_mode()])
+        self.result_text_edit.setPlainText(u"结果数量： %s" % str(len(result)) + '\n')
+        for r in result:
+            self.set_re_result(self.list_to_str(r))
+
     def set_result_text(self, text):
         return self.result_text_edit.appendPlainText(text+'\n')
 
     def get_re_result(self, mode):
         return re.findall(r'%s' % self.re_text, self.content_text, mode)
+
+    def get_parser_result(self, parser):
+        return parser(self.content_text).xpath(self.re_text)
+
+    def get_xpath_result(self, parser):
+        return [tostring(r, encoding='utf-8').decode('utf-8', 'ignore') if isinstance(r, HtmlElement) else r for r in self.get_parser_result(parser)]
 
     def set_re_result(self, text):
         return self.set_result_text(text)
