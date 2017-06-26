@@ -52,13 +52,15 @@ class MainUi(QtGui.QMainWindow, Ui_MainWindow, QtToPython):
         self.RE_MODE = [re.S, 0]
         self.XPATH_MODE = [soupparser.fromstring, fromstring, html5parser.fromstring]
 
+    def choice_mode(self):
+        """
+        选择正则或xpath处理
+        """
+        return self.re_mode_box.currentIndex() if self.re_button.isChecked() else self.xpath_mode_box.currentIndex()
+
     @property
     def re_xpath(self):
         return 0 if self.re_button.isChecked() else 1
-
-
-    def choice_mode(self):
-        return self.re_mode_box.currentIndex() if self.re_button.isChecked() else self.xpath_mode_box.currentIndex()
 
     @property
     def re_text(self):
@@ -73,8 +75,13 @@ class MainUi(QtGui.QMainWindow, Ui_MainWindow, QtToPython):
         return self.get_text_edit_unicode(self.result_text_edit)
 
     def run_button_clicked(self):
+        """
+        点击“开始匹配”按钮动作
+        """
         result = self.RE_XPATH[self.re_xpath](self.RE_MODE[self.choice_mode()] if self.re_xpath == 0 else self.XPATH_MODE[self.choice_mode()])
-        self.result_text_edit.setPlainText(u"结果数量： %s" % str(len(result)) + '\n')
+        self.result_text_edit.clear()
+        # self.result_text_edit.setPlainText(u"结果数量： %s" % str(len(result)) + '\n')
+        self.result_count_label.setText(str(len(result)))
         for r in result:
             self.set_re_result(self.list_to_str(r))
 
